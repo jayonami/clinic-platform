@@ -2,9 +2,10 @@ import crypto from 'node:crypto';
 import { get } from '../db.js';
 import { HttpError, token as rand } from './util.js';
 import { setting, setSetting } from './settings.js';
+import { isDemo } from './demo.js';
 
 function secret() {
-  let s = process.env.AUTH_SECRET || get("SELECT value FROM settings WHERE key='auth_secret'")?.value;
+  let s = process.env.AUTH_SECRET || (process.env.VERCEL && isDemo() ? 'demo-deployment-secret-fake-data-only' : null) || get("SELECT value FROM settings WHERE key='auth_secret'")?.value;
   if (!s) {
     s = rand(32);
     setSetting('auth_secret', s);

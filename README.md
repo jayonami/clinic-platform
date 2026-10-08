@@ -80,11 +80,13 @@ Stubbed on purpose, each behind one function:
 - Staff auth is email + PIN with signed 12 h tokens (`AUTH_SECRET` env, otherwise generated and stored). Add rate-limiting at the proxy and HTTPS in deployment.
 - SQLite is fine for a single clinic; the data layer is plain SQL if you move to Postgres.
 
-## Deploying (Vercel + Render)
+## Deploying on Vercel (demo)
 
-Vercel can't host the API as-is (no persistent disk for SQLite, no long-lived SSE), so the split is:
+`vercel.json` builds the web app and routes `/api/*` to `api/index.js`, which runs the whole Express API as one serverless function. Import the repo in Vercel and deploy; no environment variables are required.
 
-1. **Render** — New → Blueprint → pick this repo (`render.yaml`). It needs a paid instance because of the disk. Note the service URL and the generated `DEMO_PIN` (Environment tab), and set `PUBLIC_URL` to your Vercel URL.
-2. **Vercel** — import the repo; `vercel.json` builds the web app and rewrites `/api/*` to the Render service. If your Render URL differs from `clinic-platform-api.onrender.com`, edit the destination in `vercel.json`.
+This is a **demo deployment**, not production hosting:
 
-Notes: in production the demo sign-in chips and the on-screen client code are off, and client sign-in needs real SMS (`lib/notify.js#deliver`). Live queue updates stream through the Vercel proxy and may reconnect every so often; screens also refresh on tab focus.
+- Serverless functions have no persistent disk. The SQLite database lives in `/tmp`, is seeded with demo data on a cold start, and **resets whenever the instance is recycled**. Parallel instances don't share data.
+- Live queue updates fall back to polling every 8 s (a serverless function can't hold an SSE stream).
+- Demo mode is on by default on Vercel: demo sign-in chips (PIN `1234`), the on-screen client one-time code, and a fixed demo token secret. Set `DEMO_MODE=0` plus `AUTH_SECRET` and `DEMO_PIN` to turn that off.
+- For real use, host `server/` on a machine with a disk (or move the data layer to Postgres) and keep Vercel for the static web app.

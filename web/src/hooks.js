@@ -5,13 +5,19 @@ import { tokens } from './api.js';
 const listeners = new Set();
 let source = null;
 function ensureSource() {
-  if (source || !tokens.get('staff') || typeof EventSource === 'undefined') return;
+  if (source || pollTimer || !tokens.get('staff') || typeof EventSource === 'undefined') return;
   source = new EventSource(`/api/events?token=${encodeURIComponent(tokens.get('staff'))}`);
   source.addEventListener('changed', () => listeners.forEach((fn) => fn()));
   source.onerror = () => {
-    // let the browser retry; drop the handle if the session ended
-    if (!tokens.get('staff')) closeLive();
+    if (!tokens.get('staff')) return closeLive();
+    // 204 / unsupported (e.g. serverless host): the browser closes the stream for good, so poll instead
+    if (source?.readyState === 2) { closeLive(); startPolling(); }
   };
+}
+let pollTimer = null;
+function startPolling() {
+  if (pollTimer) return;
+  pollTimer = setInterval(() => document.visibilityState === 'visible' && listeners.forEach((fn) => fn()), 8000);
 }
 export function closeLive() {
   source?.close();

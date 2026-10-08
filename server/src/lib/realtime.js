@@ -1,6 +1,7 @@
 const clients = new Set();
 
 export function sseHandler(req, res) {
+  if (process.env.VERCEL) return res.status(204).end(); // serverless: clients fall back to polling
   res.set({ 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache, no-transform', Connection: 'keep-alive' });
   res.flushHeaders?.();
   res.write('retry: 3000\n\n');

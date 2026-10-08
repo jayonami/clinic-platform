@@ -12,6 +12,7 @@ import {
   HttpError, addDays, conflict, isDate, minutesBetween, need, normPhone, notFound, nowLocal, str, todayStr,
 } from '../lib/util.js';
 import crypto from 'node:crypto';
+import { isDemo } from '../lib/demo.js';
 
 const r = Router();
 
@@ -19,7 +20,7 @@ r.get('/config', (_req, res) => {
   const s = getSettings();
   res.json({
     brand_name: s.brand_name, clinic_name: s.clinic_name, open: s.open_time, close: s.close_time,
-    time_windows: timeOfDayRange, cancel_window_hours: +s.cancel_window_hours, dev: process.env.NODE_ENV !== 'production',
+    time_windows: timeOfDayRange, cancel_window_hours: +s.cancel_window_hours, dev: isDemo(),
   });
 });
 
@@ -67,7 +68,7 @@ r.post('/otp', rateLimit('otp', 6, 15 * 60e3), (req, res) => {
   const norm = normPhone(req.body.phone);
   need(norm.length === 10, 'Enter a 10-digit phone number');
   const client = get('SELECT * FROM clients WHERE phone_norm=?', norm);
-  const dev = process.env.NODE_ENV !== 'production';
+  const dev = isDemo();
   let dev_code;
   if (client) {
     const code = String(crypto.randomInt(100000, 1000000));

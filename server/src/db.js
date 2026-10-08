@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = process.env.DATA_DIR || path.resolve(here, '../data');
+const dataDir = process.env.DATA_DIR || (process.env.VERCEL ? '/tmp' : path.resolve(here, '../data'));
 fs.mkdirSync(dataDir, { recursive: true });
 export const dbPath = process.env.DB_PATH || path.join(dataDir, 'clinic.db');
 
