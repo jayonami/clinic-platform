@@ -53,7 +53,7 @@ test('booking prevents double-booking a provider or room', async () => {
   const meta = (await api('GET', '/meta')).json;
   const jessica = meta.providers.find((p) => p.short_name === 'Jessica K.').id;
   const svc = (await api('GET', '/services')).json.find((s) => s.name.startsWith('Laser Hair'));
-  const room1 = meta.resources.find((r) => r.name === 'Room 1').id;
+  const room1 = meta.resources.find((r) => r.name === 'Therapist 1').id;
   const body = { client_id: clients[0].id, service_id: svc.id, provider_id: jessica, resource_id: room1, date: tomorrow, time: '10:00' };
   const ok = await api('POST', '/appointments', body);
   assert.equal(ok.status, 201, JSON.stringify(ok.json));
@@ -154,7 +154,7 @@ test('online booking request lands with reception and can be confirmed', async (
   const meta = (await api('GET', '/meta')).json;
   const confirm = await api('POST', `/booking-requests/${mine.id}/confirm`, {
     date: tomorrow, time: '15:00', provider_id: meta.providers.find((p) => p.short_name === 'Anika S.').id,
-    resource_id: meta.resources.find((r) => r.name === 'Room 2').id,
+    resource_id: meta.resources.find((r) => r.name === 'Therapist 2').id,
   });
   assert.equal(confirm.status, 201, JSON.stringify(confirm.json));
   assert.equal(confirm.json.channel, 'online');

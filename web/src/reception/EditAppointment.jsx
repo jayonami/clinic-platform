@@ -106,7 +106,7 @@ export default function EditAppointment() {
                         <div className="row wrap">
                           <div className="grow"><Field label="Provider"><select className="select" value={providerId} onChange={(e) => setProviderId(+e.target.value)}>
                             {(meta.data?.providers ?? []).map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select></Field></div>
-                          <div className="grow"><Field label="Room"><select className="select" value={resourceId} onChange={(e) => setResourceId(+e.target.value)}>
+                          <div className="grow"><Field label="Therapist column"><select className="select" value={resourceId} onChange={(e) => setResourceId(+e.target.value)}>
                             {(meta.data?.resources ?? []).filter((r) => r.kind === a.service_kind).map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}</select></Field></div>
                         </div>
                       )}

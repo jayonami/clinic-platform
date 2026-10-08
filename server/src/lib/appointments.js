@@ -57,7 +57,7 @@ export function assertFree({ provider_id, resource_id, start_at, end_at, exclude
     exclude_id ?? -1, end_at, start_at, provider_id, resource_id,
   );
   if (clash) {
-    throw conflict(clash.provider_id === +provider_id ? 'That provider is already booked at this time' : 'That room is already booked at this time', 'busy');
+    throw conflict(clash.provider_id === +provider_id ? 'That provider is already booked at this time' : 'That therapist column is already booked at this time', 'busy');
   }
 }
 
@@ -123,7 +123,7 @@ export function createAppointment({
   const svc = get('SELECT * FROM services WHERE id=? AND active=1', service_id);
   if (!svc) throw bad('Unknown service');
   const res = get('SELECT * FROM resources WHERE id=? AND active=1', resource_id);
-  if (!res) throw bad('Unknown room');
+  if (!res) throw bad('Unknown therapist column');
   if (!get('SELECT id FROM staff WHERE id=? AND active=1 AND role=\'provider\'', provider_id)) throw bad('Unknown provider');
   if (res.kind !== svc.kind) throw bad(`${svc.name} can't be done in ${res.name}`);
   const end_at = addMinutes(start_at, svc.duration_min);

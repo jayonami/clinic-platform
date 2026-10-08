@@ -286,8 +286,8 @@ export default function Calendar() {
                 <h2>Legend</h2>
                 <div className="legend">
                   <div><i style={{ background: 'var(--brand)' }} />Consultation</div>
-                  <div><i style={{ background: 'var(--steel)' }} />Procedure room</div>
-                  <div><i style={{ background: 'var(--gold)' }} />Styling room</div>
+                  <div><i style={{ background: 'var(--steel)' }} />Procedure</div>
+                  <div><i style={{ background: 'var(--gold)' }} />Styling</div>
                   <div><i style={{ background: '#d9d5c9' }} />Blocked / open</div>
                   <div className="small faint"><Zap size={14} /> Click an empty time to book it</div>
                 </div>

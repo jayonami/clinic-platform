@@ -129,13 +129,13 @@ export default function NewAppointment() {
               </section>
 
               <section className="card">
-                <div className="eyebrow" style={{ marginBottom: 12 }}>3. Provider &amp; room</div>
+                <div className="eyebrow" style={{ marginBottom: 12 }}>3. Provider &amp; therapist</div>
                 <div className="row wrap" style={{ alignItems: 'flex-start' }}>
                   <div className="grow"><Field label="Provider">
                     <select className="select" value={providerId} onChange={(e) => setProviderId(Number(e.target.value))}>
                       {providers.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
                     </select></Field></div>
-                  <div className="grow"><Field label="Room">
+                  <div className="grow"><Field label="Therapist column">
                     <select className="select" value={resourceId} onChange={(e) => setResourceId(Number(e.target.value))}>
                       {rooms.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
                     </select></Field></div>

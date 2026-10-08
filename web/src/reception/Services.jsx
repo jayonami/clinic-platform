@@ -23,7 +23,7 @@ export default function Services() {
                     <td><b>{s.name}</b>{s.sessions_total && <span className="small muted"> · {s.sessions_total}-session package</span>}{!s.active && <> <Badge tone="gray">Inactive</Badge></>}</td>
                     <td className="muted">{s.category}</td><td className="num">{s.duration_min} min</td><td className="num">{money(s.price_cents)}</td>
                     <td className="num">{s.price_cents ? `${s.margin_pct.toFixed(1)}%` : '—'}</td>
-                    <td><Badge tone={s.kind === 'consult' ? '' : s.kind === 'procedure' ? 'steel' : 'gold'}>{s.kind === 'consult' ? 'Consult' : s.kind === 'procedure' ? 'Procedure room' : 'Styling room'}</Badge>{s.online_bookable ? <> <Badge tone="gray">Online</Badge></> : null}</td>
+                    <td><Badge tone={s.kind === 'consult' ? '' : s.kind === 'procedure' ? 'steel' : 'gold'}>{s.kind === 'consult' ? 'Consult' : s.kind === 'procedure' ? 'Procedure' : 'Styling'}</Badge>{s.online_bookable ? <> <Badge tone="gray">Online</Badge></> : null}</td>
                   </tr>
                 ))}
               </tbody>

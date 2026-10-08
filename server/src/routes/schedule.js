@@ -141,7 +141,7 @@ export function rescheduleAppointment(id, { date, time, provider_id, resource_id
   const start_at = mkDT(date, time);
   const end_at = addMinutes(start_at, old.duration_min);
   if (start_at === old.start_at && pid === old.provider_id && rid === old.resource_id) throw bad('Pick a different time');
-  if (rid !== old.resource_id && get('SELECT kind FROM resources WHERE id=?', rid)?.kind !== old.service_kind) throw bad('That room cannot be used for this service');
+  if (rid !== old.resource_id && get('SELECT kind FROM resources WHERE id=?', rid)?.kind !== old.service_kind) throw bad('That column cannot be used for this service');
   tx(() => {
     assertFree({ provider_id: pid, resource_id: rid, start_at, end_at, exclude_id: id });
     update('appointments', id, { start_at, end_at, provider_id: pid, resource_id: rid, status: 'booked', checked_in_at: null });

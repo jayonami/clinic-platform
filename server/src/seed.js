@@ -50,8 +50,8 @@ function seedBody() {
   ]) staff[key] = insert('staff', { name, short_name: short, initials, email, pin_hash: pin, role, title, active: 1 });
 
   const res = {};
-  [['consult', 'Consult', 'Dr. Carter — Consult', 'consult'], ['room1', 'Room 1', 'Room 1', 'procedure'],
-    ['room2', 'Room 2', 'Room 2', 'procedure'], ['room3', 'Room 3', 'Room 3', 'styling']].forEach(([k, name, label, kind], i) => {
+  [['consult', 'Consult', 'Dr. Carter — Consult', 'consult'], ['room1', 'Therapist 1', 'Therapist 1', 'procedure'],
+    ['room2', 'Therapist 2', 'Therapist 2', 'procedure'], ['room3', 'Therapist 3', 'Therapist 3', 'styling']].forEach(([k, name, label, kind], i) => {
     res[k] = insert('resources', { name, label, kind, sort: i, active: 1 });
   });
 

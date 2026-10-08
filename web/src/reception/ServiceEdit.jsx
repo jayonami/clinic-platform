@@ -93,8 +93,8 @@ export default function ServiceEdit() {
                   <div className="grow"><Field label="Sale price / session ($)"><input className="input" inputMode="decimal" value={f.price} onChange={set('price')} /></Field></div>
                 </div>
                 <div className="row wrap" style={{ alignItems: 'flex-start' }}>
-                  <div className="grow"><Field label="Room type"><select className="select" value={f.kind} onChange={set('kind')}>
-                    <option value="consult">Consultation</option><option value="procedure">Procedure room</option><option value="styling">Styling room</option></select></Field></div>
+                  <div className="grow"><Field label="Column type"><select className="select" value={f.kind} onChange={set('kind')}>
+                    <option value="consult">Consultation</option><option value="procedure">Procedure</option><option value="styling">Styling</option></select></Field></div>
                   <div className="grow"><Field label="Sessions in package" hint="Blank for a one-off service"><input className="input" inputMode="numeric" value={f.sessions_total} onChange={set('sessions_total')} /></Field></div>
                 </div>
                 <div className="row wrap" style={{ alignItems: 'flex-start' }}>

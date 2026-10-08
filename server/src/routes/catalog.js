@@ -25,7 +25,7 @@ r.get('/meta', (_req, res) => {
     staff: all('SELECT id, name, short_name, initials, role FROM staff WHERE active=1 ORDER BY id'),
     promotions: all('SELECT * FROM promotions WHERE active=1'),
     reasons: {
-      reschedule: ['Client requested', 'Provider unavailable', 'Room unavailable', 'Illness', 'Running late', 'Other'],
+      reschedule: ['Client requested', 'Provider unavailable', 'Therapist unavailable', 'Illness', 'Running late', 'Other'],
       cancel: ['Client cancelled', 'No longer needed', 'Provider unavailable', 'Duplicate booking', 'Illness', 'Other'],
     },
     referrals: ['Walk-in', 'Online search', 'Friend or family', 'Social media', 'Doctor referral', 'Other'],
