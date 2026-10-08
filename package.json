@@ -1,0 +1,30 @@
+{
+  "name": "clinic-platform",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Appointments, check-in, billing and consultations for a multi-room clinic — reception, staff and client apps.",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c blue,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:server": "node --no-warnings --watch server/src/index.js",
+    "dev:web": "vite --config web/vite.config.js",
+    "build": "vite build --config web/vite.config.js",
+    "start": "node --no-warnings server/src/index.js",
+    "seed": "node --no-warnings server/src/seed.js --reset",
+    "test": "node --no-warnings --test server/test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "lucide-react": "^0.468.0",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "vite": "^5.4.11"
+  }
+}

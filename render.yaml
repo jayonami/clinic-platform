@@ -1,0 +1,29 @@
+# Render blueprint: the API (and, as a fallback, the built web app) on a persistent disk.
+# The disk keeps the SQLite file and requires a paid instance type.
+services:
+  - type: web
+    name: clinic-platform-api
+    runtime: node
+    plan: starter
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    disk:
+      name: clinic-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 24
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: TRUST_PROXY
+        value: 2          # Vercel rewrite + Render's own proxy
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: DEMO_PIN     # PIN given to every demo staff account on first start — read it in the dashboard
+        generateValue: true
+      - key: PUBLIC_URL   # your Vercel URL, used in text-message links
+        sync: false
